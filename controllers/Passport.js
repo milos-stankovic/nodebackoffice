@@ -21,13 +21,13 @@ module.exports = function(passport) {
       email: req.body.email,
       password: req.body.password
     })
-    .then(function(user) {
+    .then(function(user, req) {
       // handle login here, user will be falsey if no user found with that email
       req.logIn(user, (err) => {
         if (err) { return err; }
         req.flash('success', { msg: 'Success! You are logged in.' });
         res.redirect(req.session.returnTo || '/');
-      })(req, res, next);
+      })(req);
       console.log('found', user);
     })
     .catch(function(err) {
