@@ -1,0 +1,16 @@
+{
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "transform-async-generator-functions",
+      "transform-async-to-generator"
+    ]
+}

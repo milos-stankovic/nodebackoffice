@@ -1,0 +1,64 @@
+@layout('master')
+@section('content')
+<div class="o-page o-page--center">
+      <div class="o-page__card">
+        <div class="c-card c-card--center">
+          <span class="c-icon c-icon--large u-mb-small">
+            <img src="img/logo-small.svg" alt="Neat">
+          </span>
+
+          <h4 class="u-mb-medium">Sing Up to Get Started</h4>
+          <form action="/register" method="post" class="container ">
+
+            <div class="form-group c-field">
+                <label class="form-control-label c-field__label">Name</label>
+                <input class="form-control c-input u-mb-small {{error[0].field == 'name' ? 'is-invalid' : ''}}" type="text" name="name" value="{{old ? old.name : ''}}" placeholder="e.g. Adam Sandler" required="">
+                @if(error[0].field == 'name')
+                   <div class="invalid-feedback">{{error[0].message}}</div>
+                @endif
+              </div>
+
+            <div class="form-group c-field">
+              <label class="form-control-label c-field__label">Email Address</label>
+              <input class="form-control c-input u-mb-small {{error[0] == 'email' ? 'is-invalid' : ''}}" name="email" type="email" value="{{old ? old.email : ''}}" placeholder="e.g. adam@sandler.com" required="">
+              @if(error[0].field == 'email')
+                   <div class="invalid-feedback">{{error[0].message}}</div>
+              @endif
+            </div>
+
+            <div class="form-group c-field u-mb-small">
+              <label class="form-control-label c-field__label">Country</label>
+              <div class="c-select">
+                <select class="c-select__input">
+                  <option>Australia</option>
+                  <option>United Kigndom</option>
+                  <option>Netherlands</option>
+                  <option>United States</option>
+                  <option>France</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group c-field u-mb-small">
+              <label class="form-control-label c-field__label">Password</label>
+              <input class="form-control c-input {{error[0].field == 'password' ? 'is-invalid' : ''}}" type="password" name="password" placeholder="Numbers, Pharagraphs Only" required>
+              @if(error[0].field == 'password')
+                   <div class="invalid-feedback">{{error[0].message}}</div>
+              @endif
+            </div>
+
+            <div class="form-group c-field u-mb-small">
+              <label class="form-control-label c-field__label">Confirm Password</label>
+              <input class="form-control c-input {{error[0].field == 'password_confirmation' ? 'is-invalid' : ''}}" type="password" name="password_confirmation" placeholder="Rewrite your password" required>
+              @if(error[0].field == 'password_confirmation')
+                   <div class="invalid-feedback">{{error[0].message}}</div>
+              @endif
+            </div>
+
+            <button class="c-btn c-btn--fullwidth c-btn--info">Register</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+@endsection
