@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const edge = require('edge.js');
 const passport = require("passport");
 const session = require('express-session')
-const flash = require('connect-flash');
 const swal = require('sweetalert2');
 
 
@@ -47,18 +46,6 @@ app.use(session({
 	saveUninitialized: true,
 }));
 
-
-app.use(flash());
-app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
-});
-
-app.all('/xxx', function(req, res){
- var test = Object.keys(res).length;
- console.log(test);
-});
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -66,28 +53,23 @@ app.use(passport.session());
 app.use('/', index);
 app.use('/users', users);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+/// catch 404 and forward to error handler
+app.use(function(err,req, res, next) {
+  res.status(err.status || 404);
+  res.render('error', {
+      message: err.message,
+      error: err
+  });
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  // res.locals.message = require('express-messages')(req, res);
-  // res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // // render the error page
-  // res.status(err.status || 500);
-  // res.render('error');
-
+  console.log('error', err);
   res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+  res.render('error', {
+      message: err.message,
+      error: err
+  });
 });
 
 module.exports = app;
