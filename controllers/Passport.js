@@ -20,18 +20,15 @@ module.exports = function(passport) {
         User.authenticate({
           email: email,
           password: password
-        })
-          .then(function(user) {
-            console.log('Juzerr', user);
-            if (!user) {
-              return done(null, false);
-            }
+        }, function (error, user) {
+          if (error || !user) {
+            return done(error);
+          } else {
             return done(null, user);
-          })
-          .catch(function(err) {
-            // either findOne threw an exception or it returned a rejected promise
-            return done(err);
-          });
+          }
+        })
+
+
       }
     )
   );

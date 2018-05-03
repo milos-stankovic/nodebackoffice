@@ -33,15 +33,13 @@ class Auth {
         return next(err);
       }
       if (!user) {
-        req.flash("errors", info);
         return res.redirect("/rrr");
       }
       req.logIn(user, err => {
         if (err) {
           return next(err);
         }
-        req.flash("success", { msg: "Success! You are logged in." });
-        res.redirect(req.session.returnTo || "/");
+        res.redirect("/");
       });
     })(req, res, next);
     console.log("Logged In", res.user);

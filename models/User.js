@@ -13,8 +13,9 @@ const schema = new Schema({
 schema.statics.authenticate = function (credentials, callback) {
   console.log('------------------------------------');
   console.log('Email and password', credentials);
+  console.log(callback);
   console.log('------------------------------------');
-  User.findOne({email: credentials.email, password: credentials.password})
+  User.findOne({email: credentials.email})
   .exec(function (err, user) {
     console.log('Ima li ga?', user);
     if (err) {
@@ -22,16 +23,15 @@ schema.statics.authenticate = function (credentials, callback) {
     } else if (!user) {
       // var err = new Error('User not found.');
       // err.status = 401;
-      // return callback(err);
+      return callback(err);
       console.log('Fuuuuck', err);
-      return err;
     }
     bcrypt.compare(credentials.password, user.password, function (err, result) {
       if (result === true) {
         console.log('Result', user);
-        return callback(null, user);
+       return callback(null, user);
       } else {
-        return err;
+        return callback();
       }
     })
   });
